@@ -1275,3 +1275,19 @@ addActionHandler('closeQuickPreview', (global, actions, payload): ActionReturnTy
     quickPreview: undefined,
   }, tabId);
 });
+
+addActionHandler('openSavedCleanup', (global, actions, payload): ActionReturnType => {
+  const { chatId, tabId = getCurrentTabId() } = payload;
+
+  return updateTabState(global, {
+    savedCleanup: { chatId },
+  }, tabId);
+});
+
+addActionHandler('closeSavedCleanup', (global, actions, payload): ActionReturnType => {
+  const { tabId = getCurrentTabId() } = payload || {};
+
+  return updateTabState(global, {
+    savedCleanup: undefined,
+  }, tabId);
+});

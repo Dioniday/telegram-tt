@@ -3321,6 +3321,8 @@ export interface LangPair {
   'GroupCallsUnsupported': undefined;
   'MiniAppQrScanUnsupported': undefined;
   'PageTitleInactive': undefined;
+  'SavedCleanupMenu': undefined;
+  'SavedCleanupTitle': undefined;
 }
 
 export interface LangPairWithVariables<V = LangVariable> {

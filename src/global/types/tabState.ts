@@ -1296,6 +1296,10 @@ export type TabState = {
     threadId?: ThreadId;
   };
 
+  savedCleanup?: {
+    chatId: string;
+  };
+
   isPasskeyModalOpen?: boolean;
 
   leaveGroupModal?: {

@@ -4439,3 +4439,5 @@
 "PageTitleInactive" = "[Inactive]";
 "PageTitleNotifications_one" = "{count} notification";
 "PageTitleNotifications_other" = "{count} notifications";
+"SavedCleanupMenu" = "Tidy Up";
+"SavedCleanupTitle" = "Tidy Up Saved Messages";

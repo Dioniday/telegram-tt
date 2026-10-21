@@ -236,6 +236,7 @@ const HeaderMenuContainer = ({
     setChatHistoryTtl,
     openAutoDeleteTimerModal,
     openWalletTransferLink,
+    openSavedCleanup,
   } = getActions();
 
   const lang = useLang();
@@ -435,6 +436,11 @@ const HeaderMenuContainer = ({
 
   const handleSearch = useLastCallback(() => {
     onSearchClick();
+    closeMenu();
+  });
+
+  const handleSavedCleanupClick = useLastCallback(() => {
+    openSavedCleanup({ chatId });
     closeMenu();
   });
 
@@ -649,6 +655,14 @@ const HeaderMenuContainer = ({
               onClick={handleSearch}
             >
               {lang('Search')}
+            </MenuItem>
+          )}
+          {isChatWithSelf && threadId === MAIN_THREAD_ID && (
+            <MenuItem
+              icon="brush"
+              onClick={handleSavedCleanupClick}
+            >
+              {lang('SavedCleanupMenu')}
             </MenuItem>
           )}
           {withForumActions && canCreateTopic && (

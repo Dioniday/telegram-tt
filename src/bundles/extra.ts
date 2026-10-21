@@ -70,6 +70,7 @@ export { default as StickerSetModal } from '../components/common/StickerSetModal
 export { default as CustomEmojiSetsModal } from '../components/common/CustomEmojiSetsModal';
 export { default as HeaderMenuContainer } from '../components/middle/HeaderMenuContainer';
 export { default as MiddleSearch } from '../components/middle/search/MiddleSearch';
+export { default as SavedCleanup } from '../components/middle/savedCleanup/SavedCleanup';
 export { default as ReactionPicker } from '../components/middle/message/reactions/ReactionPicker';
 
 export { default as AiMessageEditorModal }

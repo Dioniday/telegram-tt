@@ -99,6 +99,7 @@ import MiddleHeaderPanesIsland from './MiddleHeaderPanesIsland';
 import AudioPlayer from './panes/AudioPlayer';
 import PremiumRequiredPlaceholder from './PremiumRequiredPlaceholder';
 import ReactorListModal from './ReactorListModal.async';
+import SavedCleanup from './savedCleanup/SavedCleanup.async';
 import MiddleSearch from './search/MiddleSearch.async';
 
 import './MiddleColumn.scss';
@@ -138,6 +139,8 @@ type StateProps = {
   isPrivacySettingsNoticeModalOpen: boolean;
   isReactorListModalOpen: boolean;
   isChatLanguageModalOpen?: boolean;
+  hasSavedCleanup?: boolean;
+  isSavedCleanupOpen?: boolean;
   animationLevel: AnimationLevel;
   withInterfaceAnimations?: boolean;
   withRightColumnAnimation?: boolean;
@@ -214,6 +217,8 @@ function MiddleColumn({
   isPrivacySettingsNoticeModalOpen,
   isReactorListModalOpen,
   isChatLanguageModalOpen,
+  hasSavedCleanup,
+  isSavedCleanupOpen,
   animationLevel,
   withInterfaceAnimations,
   withRightColumnAnimation,
@@ -255,6 +260,7 @@ function MiddleColumn({
     loadFullChat,
     setLeftColumnWidth,
     resetLeftColumnWidth,
+    closeSavedCleanup,
   } = getActions();
 
   const { isTablet, isDesktop } = useAppLayout();
@@ -376,6 +382,13 @@ function MiddleColumn({
   useSyncEffect(() => {
     setDropAreaState(DropAreaState.None);
   }, [chatId]);
+
+  // Closes the cleanup deck when the user leaves the chat it was opened in
+  useEffect(() => {
+    if (hasSavedCleanup && !isSavedCleanupOpen) {
+      closeSavedCleanup();
+    }
+  }, [hasSavedCleanup, isSavedCleanupOpen]);
 
   // Fix for mobile virtual keyboard
   useEffect(() => {
@@ -707,6 +720,7 @@ function MiddleColumn({
             </Transition>
           </div>
           <MiddleSearch isActive={Boolean(hasActiveMiddleSearch)} />
+          <SavedCleanup isOpen={Boolean(isSavedCleanupOpen)} />
         </>
       )}
       {chatId && (
@@ -742,7 +756,7 @@ export default memo(withGlobal<OwnProps>(
       messageLists, isLeftColumnShown, activeEmojiInteractions,
       seenByModal, reactorModal, shouldSkipHistoryAnimations,
       chatLanguageModal, privacySettingsNoticeModal,
-      uiReadyState, isRichInputExpanded,
+      uiReadyState, isRichInputExpanded, savedCleanup,
     } = selectTabState(global);
     const currentMessageList = selectCurrentMessageList(global);
     const { leftColumnWidth } = global;
@@ -763,6 +777,7 @@ export default memo(withGlobal<OwnProps>(
       isPrivacySettingsNoticeModalOpen: Boolean(privacySettingsNoticeModal),
       isReactorListModalOpen: Boolean(reactorModal),
       isChatLanguageModalOpen: Boolean(chatLanguageModal),
+      hasSavedCleanup: Boolean(savedCleanup),
       animationLevel: selectSharedSettings(global).animationLevel,
       withInterfaceAnimations: selectCanAnimateInterface(global),
       withRightColumnAnimation: selectCanAnimateRightColumn(global),
@@ -889,6 +904,7 @@ export default memo(withGlobal<OwnProps>(
       isAccountFrozen,
       freezeAppealChat,
       shouldBlockSendInMonoforum,
+      isSavedCleanupOpen: savedCleanup?.chatId === chatId && isMainThread,
     } as Complete<StateProps>;
   },
 )(MiddleColumn));

@@ -3165,6 +3165,11 @@ export interface ActionPayloads {
   } & WithTabId;
   closeQuickPreview: WithTabId | undefined;
 
+  openSavedCleanup: {
+    chatId: string;
+  } & WithTabId;
+  closeSavedCleanup: WithTabId | undefined;
+
   openDeleteMessageModal: ({
     chatId: string;
     messageIds: number[];
